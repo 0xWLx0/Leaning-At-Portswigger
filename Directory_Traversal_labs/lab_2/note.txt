@@ -1,0 +1,10 @@
+Directory Traversal - Product images
+
+Goals: Display the content of the /etc/passwd file
+
+Analysis:
+--------
+
+filename=/etc/passwd
+
+Solved

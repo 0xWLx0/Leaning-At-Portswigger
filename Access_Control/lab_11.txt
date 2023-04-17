@@ -1,0 +1,27 @@
+
+
+firstly login with the administrator account
+
+access the admin panel and upgrade carlos to admin
+try to upgrade carlos again then intercept the request and send it to the repeater
+
+secondly go and login to the user account(wiener) non-admin user
+intercept the home page request and take the user wiener session token
+
+back to the repeater send the upgrade request with user wiener session
+response -> "Unauthorized"
+
+change the http method POSTX or GET
+response -> "Missing parameter 'username'"
+
+put the username and action parameters in the path of the request
+like this
+POSTX /admin-roles?username=carlos&action=upgrade HTTP/2
+or
+GET /admin-roles?username=carlos&action=upgrade HTTP/2
+
+now change the username to wiener and send the request
+
+to make sure your an admin user try to access the admin panel (/admin)
+
+solved

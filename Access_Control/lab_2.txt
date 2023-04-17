@@ -1,0 +1,7 @@
+go through the source code 
+find:
+adminPanelTag.setAttribute('href', '/admin-ob4wxd');
+
+access /admin-ob4wxd and delete carlos
+
+solved

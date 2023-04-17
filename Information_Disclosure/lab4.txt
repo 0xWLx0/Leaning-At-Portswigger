@@ -1,0 +1,24 @@
+first login :
+wiener: peter
+
+access admin panle
+you get this masseage -> Admin interface only available to local users 
+
+intercept the request and send it to the repeater
+change the http method to **TRACE**
+
+you will notice **X-Custom-IP-Authorization: 2.88.104.3** in the response
+
+use this header in the get request and set it to 127.0.0.1
+
+GET /admin HTTP/2
+Host: 0aa4005a04a8a3ca81eb2ba2008f00f5.web-security-academy.net
+X-Custom-Ip-Authorization: 127.0.0.1
+
+now try to access the admin panel and intercept the request then use this header
+
+now you accessed the admin panel try to delet carlos and intercept the request and then add the header X-Custom-Ip-Authorization: 127.0.0.1
+
+Solved
+
+

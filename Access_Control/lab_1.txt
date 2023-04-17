@@ -1,0 +1,7 @@
+/robots.txt
+find:
+/admin
+
+access /admin and delete carlos
+
+solved

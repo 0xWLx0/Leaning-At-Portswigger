@@ -1,0 +1,9 @@
+url: https://0ae700180415c5b8c008363a00be0075.web-security-academy.net/product?productId=1
+
+change productId= '
+
+error shows the version of the server
+
+Apache Struts 2 2.3.31
+
+solved 

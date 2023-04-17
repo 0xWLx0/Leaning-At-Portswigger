@@ -1,0 +1,20 @@
+Vulnerable - Username enumeration
+Vulnerable - Password brute-force attacks
+
+Goals:
+1- Enumerate a valid username
+2- Brute-force this user password
+3- Access the account page of this user
+
+Analysis:
+--------
+
+-> username: at  -> Invalid username or password
+-> other usernames -> Invalid username or password.
+
+-> username at and password qwerty -> 302 response
+
+Username: at
+Password: qwerty
+
+Solved

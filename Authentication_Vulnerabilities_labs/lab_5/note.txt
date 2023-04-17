@@ -1,0 +1,25 @@
+Vulnerable - Logic flaw
+
+Goals:
+1- Enumerate a valid username
+2- Brute-force this user
+3- Access the account page of this user
+
+Analysis:
+--------
+
+try to login with the username (atlas) 4-5 times 
+-> 200 response -> You have made too many incorrect login attempts. Please try again in 1 minute(s).
+
+-> other usernames -> Invalid username or password
+
+username atlas and password mom 
+-> 200 response and length 3158 -> between all the other requests there was only one request that has length 3158
+-> all the other requests say Invalid user or wait for 1 minute
+
+note: Try passwords.txt first if it didn't word try newpass.txt.
+
+Username: atlas
+Password: mom
+
+Solved

@@ -1,0 +1,6 @@
+login to your account(wiener)
+access My Account notice there is a parameter called id have the value wiener which is my usrename
+
+change id value to the username carlos and now you accessed carlos account get carlos API key
+
+solved

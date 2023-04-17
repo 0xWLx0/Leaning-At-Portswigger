@@ -1,0 +1,6 @@
+found in the source code :
+<!-- <a href=/cgi-bin/phpinfo.php>Debug</a> -->
+
+access the page and get the secret_key
+
+solved

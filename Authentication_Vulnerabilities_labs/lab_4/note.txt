@@ -1,0 +1,33 @@
+Vulnerable - Broken logic flaw in its password brute-force protection
+
+Goals:
+1- Brute-force carlos password.
+2- Login in as the user carlos.
+
+Given information:
+My credentials:  wiener:peter
+Victim username: carlos
+
+Analysis:
+--------
+
+after login in with wrong password this message comes up
+-> You have made too many incorrect login attempts. Please try again in 1 minute(s).
+
+after that try to login with a correct username and password
+in the fifth try it logged in 
+
+Brute-force carlos password using each password 6 times
+
+note: You can use the scripts Found in the same folder.
+script.py
+script2.py
+newusers.txt
+newpass.txt
+
+username carlos and password 159753 -> 302 rsponse
+
+Username: carlos
+Password: 159753
+
+Solved

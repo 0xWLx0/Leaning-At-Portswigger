@@ -1,0 +1,8 @@
+1- login to your account(wiener)
+2- go to my account page
+3- change the id to administrator 
+5- get the administrator password from the source code
+6- login to administrator account and go to the admin panel
+7- delete carlos account
+
+solved

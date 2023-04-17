@@ -1,0 +1,12 @@
+Vulnerable - Broken logic in two-factor authentication
+
+Goal: Access carlos account page
+
+Given information:
+My cerdentials: Username: wiener , Password: peter
+
+Victim cerdentials: Username: carlos
+
+Analysis:
+--------
+

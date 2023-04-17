@@ -1,0 +1,26 @@
+notice that there is an admin page
+when try to access it  -> resoponse -> Access denied
+
+send the admin panel request to the repeater
+
+let's try to use X-Original-URL header
+
+GET / HTTP/2
+X-Original-Url: /admin
+
+the bypass worked and we can see the usernames carlos and wiener
+
+at the end of the request there is the delete path to delete carlos and wiener
+paths:
+/admin/delete?username=wiener
+/admin/delete?username=carlos
+
+now let's try to delete carlos account using the header X-Original-Url
+
+request:
+GET /?username=carlos HTTP/2
+X-Original-Url: /admin/delete
+
+to check if carlos deleted or not access the admin panel again
+
+solved

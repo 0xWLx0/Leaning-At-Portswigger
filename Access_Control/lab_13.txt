@@ -1,0 +1,20 @@
+login with the administrator account
+
+Upgrade the user carlos intercept the request
+and send it to the repeater
+
+now login to your account(wiener) non-admin user
+next intercept my account page request and take the user(wiener) session
+
+Browse to /admin-roles?username=carlos&action=upgrade
+response -> "Unauthorized"
+
+back to the repeater in the upgrade request change the session to the user(wienre) session
+also change the username to your username(wiener) 
+
+send the request
+
+now you are an admin user
+
+solved
+

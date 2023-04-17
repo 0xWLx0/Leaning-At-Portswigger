@@ -1,0 +1,17 @@
+login with the administrator account
+
+Upgrade the user carlos notice there is confirm request
+send that request to the repeater
+
+now login to your account(wiener) non-admin user
+next intercept my account page request and take the user(wiener) session
+
+back to the repeater in the upgrade request change the session to the user(wienre) session
+also change the username to your username(wiener) 
+
+send the request
+
+now you are an admin user
+
+solved
+

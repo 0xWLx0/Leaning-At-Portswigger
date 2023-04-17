@@ -1,0 +1,8 @@
+login to your account (wiener) access /my-account?id=wiener
+you will find in the request a cookie called Admin have the value false
+set that cookie to true when you send the request
+
+access /admin and delete carlos 
+
+solved
+

@@ -1,0 +1,12 @@
+access robots.txt 
+User-agent: *
+Disallow: /backup
+
+access /backup 
+click on the file found
+in this source code you will find that the database is postgresql
+and there is along string represent the password of the database
+
+gd26l1g7ugwuzwz21rbur3ltc7p7pzyz
+
+solved
